@@ -8,11 +8,12 @@ float lon_acceleration;
 float dt;
 float wheelbase;
 
-float process_noise[4][4];
-float measurement_noise[2][2];
-float measurements[3][2];
-float H[2][4];
+Eigen::Matrix4f P = Eigen::Matrix4f::Zero();
+Eigen::Matrix4f Q = Eigen::Matrix4f::Zero();
+Eigen::Matrix<float, 2, 4> H;
+Eigen::Matrix2f R = Eigen::Matrix2f::Zero();
 
-std::vector<float> motion_model(std::vector<float> x, std::vector<float> u, float dt=0.1, float L=2.5);
-void initialize_variables(float& dt, float& steering_angle, float& wheelbase, float& lon_acceleration,
-                          float& process_noise, float& measurement_noise, float& H);
+float measurements[3][2];
+
+Eigen::Matrix<float, 4, 1> motion_model(std::vector<float> x, std::vector<float> u, float dt=0.1, float L=2.5);
+void initialize_variables();
